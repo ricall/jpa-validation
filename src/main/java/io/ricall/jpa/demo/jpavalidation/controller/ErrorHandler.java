@@ -23,7 +23,6 @@
 
 package io.ricall.jpa.demo.jpavalidation.controller;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
 import io.ricall.jpa.demo.jpavalidation.model.BindError;
 import io.ricall.jpa.demo.jpavalidation.model.BindErrorMessage;
 import lombok.extern.slf4j.Slf4j;
@@ -37,8 +36,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.stream.Collectors;
-
-import static java.util.Collections.singletonList;
 
 @Slf4j
 @ControllerAdvice

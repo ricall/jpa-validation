@@ -23,7 +23,6 @@
 
 package io.ricall.jpa.demo.jpavalidation.controller;
 
-import io.ricall.jpa.demo.jpavalidation.entity.ProductType;
 import io.ricall.jpa.demo.jpavalidation.model.ReferenceData;
 import io.ricall.jpa.demo.jpavalidation.service.ProductTypeService;
 import lombok.RequiredArgsConstructor;

@@ -48,9 +48,9 @@ public class DefaultProductService implements ProductService {
     }
 
     @Override
-    public Optional<Product> update(Long id, Product product) {
+    public Optional<Product> update(Long id, Product modifiedProduct) {
         return productRepository.findById(id)
-                .map(p -> p.merge(product))
+                .map(product -> product.merge(modifiedProduct))
                 .map(productRepository::save);
     }
 

@@ -23,31 +23,32 @@
 
 package io.ricall.jpa.demo.jpavalidation.controller;
 
-import org.hamcrest.Matchers;
+import lombok.val;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.validation.BindException;
+import org.springframework.validation.ObjectError;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-public class ProductTypeControllerTest {
+public class ErrorHandlerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+    private ErrorHandler subject = new ErrorHandler();
 
     @Test
-    public void verifyWeCanFindProductTypes() throws Exception {
-        mockMvc.perform(get("/productTypes")
-                .accept("application/json"))
-                .andExpect(status().is(200))
-                .andExpect(jsonPath("$", Matchers.hasSize(5)))
-                .andExpect(jsonPath("$[?(@.type=='X1')].description").value("Test product"));
-    }
+    public void verifyErrorHandlerConvertsObjectErrorsCorrectly() {
+        val exception = new BindException(this, "foo");
+        exception.addError(new ObjectError("test", "object error"));
 
+        val response = subject.handleBindException(exception);
+
+        assertThat(response.getStatusCode()).isEqualTo(BAD_REQUEST);
+        val body = response.getBody();
+        assertThat(body.getDescription()).isEqualTo("Invalid request");
+        assertThat(body.getErrors()).hasSize(1);
+        val error = body.getErrors().get(0);
+        assertThat(error.getCode()).isEqualTo("E999");
+        assertThat(error.getCodeDescription()).isEqualTo("Object Error");
+        assertThat(error.getDescription()).isEqualTo("Error in object 'test': codes []; arguments []; default message [object error]");
+    }
 }

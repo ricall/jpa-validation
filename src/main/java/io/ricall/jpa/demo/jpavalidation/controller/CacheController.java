@@ -23,31 +23,35 @@
 
 package io.ricall.jpa.demo.jpavalidation.controller;
 
-import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
+import lombok.AllArgsConstructor;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+@Controller
+@AllArgsConstructor
+public class CacheController {
+    private static final String RESET_COMMAND = "RESET";
+    private static final String UNKNOWN_COMMAND = "UNKNOWN COMMAND";
 
-@SpringBootTest
-@AutoConfigureMockMvc
-public class ProductTypeControllerTest {
+    private final CacheManager cacheManager;
 
-    @Autowired
-    private MockMvc mockMvc;
+    @PostMapping("/cache")
+    public ResponseEntity<String> clearCache(@RequestBody String command) {
+        if (RESET_COMMAND.equals(command)) {
+            resetCache();
+            return ResponseEntity.ok(RESET_COMMAND);
+        }
+        return ResponseEntity.badRequest().body(UNKNOWN_COMMAND);
+    }
 
-    @Test
-    public void verifyWeCanFindProductTypes() throws Exception {
-        mockMvc.perform(get("/productTypes")
-                .accept("application/json"))
-                .andExpect(status().is(200))
-                .andExpect(jsonPath("$", Matchers.hasSize(5)))
-                .andExpect(jsonPath("$[?(@.type=='X1')].description").value("Test product"));
+    private void resetCache() {
+        cacheManager.getCacheNames().stream()
+                .map(cacheManager::getCache)
+                .forEach(Cache::clear);
     }
 
 }

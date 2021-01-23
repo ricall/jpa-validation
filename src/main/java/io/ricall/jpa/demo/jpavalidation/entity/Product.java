@@ -36,6 +36,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 
 import static org.springframework.data.annotation.AccessType.Type.FIELD;
@@ -71,13 +72,13 @@ public class Product {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime roleEnd;
 
-    public Product merge(Product p) {
-        name = p.name;
-        type = p.type;
-        category = p.category;
-        subCategory = p.subCategory;
-        roleStart = p.roleStart;
-        roleEnd = p.roleEnd;
+    public Product merge(Product product) {
+        name = product.name;
+        type = product.type;
+        category = product.category;
+        subCategory = product.subCategory;
+        roleStart = product.roleStart;
+        roleEnd = product.roleEnd;
 
         return this;
     }

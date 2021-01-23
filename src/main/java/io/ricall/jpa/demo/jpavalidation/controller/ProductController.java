@@ -26,7 +26,6 @@ package io.ricall.jpa.demo.jpavalidation.controller;
 import io.ricall.jpa.demo.jpavalidation.entity.Product;
 import io.ricall.jpa.demo.jpavalidation.service.ProductService;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

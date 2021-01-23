@@ -34,19 +34,10 @@ import org.springframework.context.annotation.Configuration;
 public class SerializationConfiguration {
 
     @Bean
-    public Jackson2ObjectMapperBuilderCustomizer customizeJackson() {
+    public Jackson2ObjectMapperBuilderCustomizer customizeJackson(DefaultProductTypeService service) {
         return builder -> builder
-                .serializers(productTypeSerializer())
-                .deserializers(productTypeDeserializer(null));
+                .serializers(new ProductTypeSerializer())
+                .deserializers(new ProductTypeDeserializer(service));
     }
 
-    @Bean
-    public ProductTypeSerializer productTypeSerializer() {
-        return new ProductTypeSerializer();
-    }
-
-    @Bean
-    public ProductTypeDeserializer productTypeDeserializer(DefaultProductTypeService service) {
-        return new ProductTypeDeserializer(service);
-    }
 }

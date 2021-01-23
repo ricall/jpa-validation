@@ -80,7 +80,7 @@ public class ProductControllerTest {
                 .type(productTypeService.fromType("X1"))
                 .category("category")
                 .subCategory("subCategory")
-                .roleStart(LocalDateTime.of(2021, Month.JANUARY, 15, 12,0, 0))
+                .roleStart(LocalDateTime.of(2021, Month.JANUARY, 15, 12, 0, 0))
                 .build());
 
         mockMvc.perform(get("/product/" + expected.getId())
@@ -102,7 +102,7 @@ public class ProductControllerTest {
                 .type(productTypeService.fromType("R3"))
                 .category("category")
                 .subCategory("subCategory")
-                .roleStart(LocalDateTime.of(2021, Month.JANUARY, 16, 15,5, 20))
+                .roleStart(LocalDateTime.of(2021, Month.JANUARY, 16, 15, 5, 20))
                 .build();
 
         mockMvc.perform(post("/product")
@@ -126,7 +126,7 @@ public class ProductControllerTest {
                 .type(productTypeService.fromType("X1"))
                 .category("category")
                 .subCategory("subCategory")
-                .roleStart(LocalDateTime.of(2021, Month.JANUARY, 15, 12,0, 0))
+                .roleStart(LocalDateTime.of(2021, Month.JANUARY, 15, 12, 0, 0))
                 .build());
 
         val updated = productService.save(Product.builder()
@@ -134,8 +134,8 @@ public class ProductControllerTest {
                 .type(productTypeService.fromType("R4"))
                 .category("category2")
                 .subCategory("subCategory2")
-                .roleStart(LocalDateTime.of(2020, Month.FEBRUARY, 16, 15,32, 1))
-                .roleEnd(LocalDateTime.of(2021, Month.FEBRUARY, 16, 15,32, 1))
+                .roleStart(LocalDateTime.of(2020, Month.FEBRUARY, 16, 15, 32, 1))
+                .roleEnd(LocalDateTime.of(2021, Month.FEBRUARY, 16, 15, 32, 1))
                 .build());
 
         mockMvc.perform(patch("/product/" + existing.getId())

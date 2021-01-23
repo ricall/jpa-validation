@@ -3,10 +3,12 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 	id 'jacoco'
+	id 'checkstyle'
 }
 
 ext {
 	jacocoExclusions = [
+			'io/ricall/jpa/demo/jpavalidation/JpaValidationApplication.class',
 			'io/ricall/jpa/demo/jpavalidation/entity/**',
 			'io/ricall/jpa/demo/jpavalidation/model/**'
 	];
@@ -49,6 +51,15 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+checkstyle {
+	configProperties += [
+			cacheFile: file('build/checkstyleCache'),
+			suppressFile: file('config/checkstyle/supressions.xml'),
+			headerFile: file('config/checkstyle/javaHeader.txt'),
+	]
+	checkstyleTest.configFile = file("$projectDir/config/checkstyle/checkstyle-test.xml")
 }
 
 jacocoTestReport {

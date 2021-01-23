@@ -77,3 +77,9 @@ PATCH http://localhost:8080/product/{id}
   "roleEnd": null
 }
 ```
+
+### To flush the cache and force Spring to load entities from the DB
+POST http://localhost:8080/cache
+```json
+RESET
+```

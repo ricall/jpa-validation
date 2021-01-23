@@ -26,6 +26,7 @@ package io.ricall.jpa.demo.jpavalidation.entity;
 public interface ReferenceType {
 
     String getType();
+
     String getDescription();
 
 }
