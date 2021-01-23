@@ -1,0 +1,18 @@
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: validate
+  mvc:
+    format:
+      date-time: iso
+  datasource:
+#    url: jdbc:h2:~/validation;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:testdb
+    driverClassname: org.h2.Driver
+    username: sa
+    password: password
+
+logging:
+  level:
+    org.springframework: WARN
